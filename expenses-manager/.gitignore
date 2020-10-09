@@ -1,0 +1,6 @@
+.ebextensions
+.vscode
+__pycache__
+env
+*.zip
+*.sqlite

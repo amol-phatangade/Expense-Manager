@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}Expenses{% endblock %}
+
+{% block body %}
+
+
+<form method="POST">
+    <select name="category">
+        {% if not selected %}
+        <option value="" selected>-- Select a Category --</option>
+        {% endif %}
+        {% for category in categories %}
+            {% if category == selected %}
+            <option value="{{ category }}" selected>{{ category }}</option>
+            {% else %}
+            <option value="{{ category }}">{{ category }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    <input type="submit" value="Go" />
+</form>
+
+<table id="expense-list">
+    <tr id="head-row">
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Name</th>
+        <th>Edit Expense</th>
+        <th>Delete Expense</th>
+    </tr>
+
+{% for expense in expenses %}
+<tr>
+    <td>{{ expense.date.strftime("%b %d, %Y") }}</td>
+    <td align="right">${{ "%0.2f" | format(expense.amount) }}</td>
+    <td><a href="{{ url_for('detail', id=expense.id) }}">{{ expense.item }}</a></td>
+    <td align="center"><a href="{{ url_for('edit', id=expense.id) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+    <td align="center"><a href="#" class="delete" data="{{ expense.id }}"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
+{% endblock %}

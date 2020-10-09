@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ expense.item }}{% endblock %}
+
+{% block body %}
+<h1>{{ expense.item }}</h1>
+<a href="https://twitter.com/share" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>
+    ${{ expense.amount | round(2) }} {{ expense.description }}
+</p>
+
+<p>
+    {{ expense.date.strftime('%b %d, %Y') }} | {{ expense.category }}
+</p>
+
+<p><a href="{{ url_for('edit', id=expense.id) }}">Edit</a></p>
+
+{% endblock %}
