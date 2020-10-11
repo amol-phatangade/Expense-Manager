@@ -46,6 +46,9 @@ def create():
         db.session.add(expense)
         db.session.commit()
         return redirect(url_for('expense_list'))
+    if request.method == "GET":
+        return render_template('add.html')
+
     return {}
 
 @application.route("/expense/<int:id>")
