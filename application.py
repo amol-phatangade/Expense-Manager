@@ -23,6 +23,28 @@ class Expense(db.Model):
     date = db.Column(db.Date)
     description = db.Column(db.Unicode)
 
+class Expense_Category(db.Model):
+    """The expense category object."""
+
+    __tablename__ = "expense_category"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Unicode)
+    color = db.Column(db.Unicode)
+
+
+def get_expense_category():
+    expense_category = Expense_Category.query.all()
+    expense_category_data = {}
+    for column in expense_category:
+        expense_category_data.update({
+            str(column.id): {
+                "name": column.name,
+                "color": column.color
+            }
+        })
+
+    return expense_category_data
+
 
 @application.route("/", methods=["GET", "POST"])
 def expense_list():
@@ -30,7 +52,7 @@ def expense_list():
         return redirect(url_for("category", category=request.form["category"]))
     expenses = Expense.query.order_by(Expense.date.desc()).all()
     categories = [column[0] for column in Expense.query.with_entities(Expense.category).distinct()]
-    return render_template('list.html', expenses=expenses, categories=categories)
+    return render_template('list.html', expenses=expenses, categories=get_expense_category())
 
 @application.route("/expense", methods=["GET", "POST"])
 def create():
@@ -47,7 +69,7 @@ def create():
         db.session.commit()
         return redirect(url_for('expense_list'))
     if request.method == "GET":
-        return render_template('add.html')
+        return render_template('add.html', categories=get_expense_category())
 
     return {}
 
@@ -96,8 +118,7 @@ def category(category):
     if request.method == "POST" and request.form["category"]:
         return redirect(url_for('category', category=request.form["category"]))
     expenses = Expense.query.filter(Expense.category == category).order_by(Expense.date.desc()).all()
-    categories = [column[0] for column in Expense.query.with_entities(Expense.category).distinct()]
-    return render_template("list.html", expenses=expenses, categories=categories, selected=category)
+    return render_template("list.html", expenses=expenses, categories=get_expense_category(), selected=category)
 
 if __name__ == "__main__":
     application.run()

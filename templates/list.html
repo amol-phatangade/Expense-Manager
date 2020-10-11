@@ -12,9 +12,9 @@
         {% endif %}
         {% for category in categories %}
             {% if category == selected %}
-            <option value="{{ category }}" selected>{{ category }}</option>
+            <option value="{{ categories[category].name }}" selected>{{ categories[category].name }}</option>
             {% else %}
-            <option value="{{ category }}">{{ category }}</option>
+            <option value="{{ categories[category].name }}">{{ categories[category].name }}</option>
             {% endif %}
         {% endfor %}
     </select>
@@ -24,8 +24,9 @@
 <table id="expense-list">
     <tr id="head-row">
         <th>Date</th>
+        <th>Category</th>
         <th>Amount</th>
-        <th>Name</th>
+        <th>Paid To</th>
         <th>Edit Expense</th>
         <th>Delete Expense</th>
     </tr>
@@ -33,8 +34,9 @@
 {% for expense in expenses %}
 <tr>
     <td>{{ expense.date.strftime("%b %d, %Y") }}</td>
-    <td align="right">{{ "%0.2f" | format(expense.amount) }}</td>
-    <td><a href="{{ url_for('detail', id=expense.id) }}">{{ expense.item }}</a></td>
+    <td align="left">{{ expense.category }}</td>
+    <td align="center">{{ "%0.2f" | format(expense.amount) }}</td>
+    <td><a href="{{ url_for('detail', id=expense.id) }}">{{ expense.paid_to }}</a></td>
     <td align="center"><a href="{{ url_for('edit', id=expense.id) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
     <td align="center"><a href="#" class="delete" data="{{ expense.id }}"><i class="fa fa-times" aria-hidden="true"></i></a></td>
 </tr>

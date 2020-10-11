@@ -19,7 +19,11 @@
     </p>
     <p>
         <label for="category">Category: </label>
-        <input type="text" name="category" />
+        <select name="category" id="cars">
+            {% for category in categories %}
+                <option value="{{ categories[category].name }}">{{ categories[category].name }}</option>
+            {% endfor %}
+        </select>
     </p>
     <p>
         <label for="description">Description: </label>
