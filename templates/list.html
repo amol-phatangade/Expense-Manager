@@ -33,7 +33,7 @@
 {% for expense in expenses %}
 <tr>
     <td>{{ expense.date.strftime("%b %d, %Y") }}</td>
-    <td align="right">${{ "%0.2f" | format(expense.amount) }}</td>
+    <td align="right">{{ "%0.2f" | format(expense.amount) }}</td>
     <td><a href="{{ url_for('detail', id=expense.id) }}">{{ expense.item }}</a></td>
     <td align="center"><a href="{{ url_for('edit', id=expense.id) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
     <td align="center"><a href="#" class="delete" data="{{ expense.id }}"><i class="fa fa-times" aria-hidden="true"></i></a></td>
