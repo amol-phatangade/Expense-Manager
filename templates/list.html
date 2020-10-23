@@ -5,47 +5,47 @@
 {% block body %}
 
 
-<form method="POST">
-    <select name="category">
-        {% if not selected %}
-        <option value="" selected>-- Select a Category --</option>
+<div> Filter By Category
+<select name="category" onchange="renderExpenses(this)">
+
+    <option value="" selected>All</option>
+    {% for category in categories %}
+        {% if category == selected %}
+        <option value="{{ categories[category].name }}" selected>{{ categories[category].name }}</option>
+        {% else %}
+        <option value="{{ categories[category].name }}">{{ categories[category].name }}</option>
         {% endif %}
-        {% for category in categories %}
-            {% if category == selected %}
-            <option value="{{ categories[category].name }}" selected>{{ categories[category].name }}</option>
-            {% else %}
-            <option value="{{ categories[category].name }}">{{ categories[category].name }}</option>
-            {% endif %}
-        {% endfor %}
-    </select>
-    <input type="submit" value="Go" />
-</form>
-
-<table id="expense-list">
-    <tr id="head-row">
-        <th>Date</th>
-        <th>Category</th>
-        <th>Amount</th>
-        <th>Paid To</th>
-        <th>Edit Expense</th>
-        <th>Delete Expense</th>
-    </tr>
-
-{% for expense in expenses %}
-<tr>
-    <td>{{ expense.date.strftime("%b %d, %Y") }}</td>
-    <td align="left">{{ expense.category }}</td>
-    <td align="center">{{ "%0.2f" | format(expense.amount) }}</td>
-    <td><a href="{{ url_for('detail', id=expense.id) }}">{{ expense.paid_to }}</a></td>
-    <td align="center"><a href="{{ url_for('edit', id=expense.id) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-    <td align="center"><a href="#" class="delete" data="{{ expense.id }}"><i class="fa fa-times" aria-hidden="true"></i></a></td>
-</tr>
-{% endfor %}
+    {% endfor %}
+</select>
+</div>
+<table id="expense-list" class="display" width="100%">
+    <thead>
+        <tr id="head-row">
+            <th>ID</th>
+            <th>Date</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Paid To</th>
+            <th>Description</th>
+        </tr>
+    </thead>
 
 </table>
 
+<div>
+    <span> Total Loan Taken: {{total_loan_given}} </span>
+    <span> Total Loan Given: {{total_loan_taken}} </span>
+    <span> Total Investment: {{total_investment}} </span>
+</div>
 {% endblock %}
 
 {% block javascript %}
 <script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
+<script>
+var expense_table;
+function renderExpenses(category) {
+    var value = category.value;
+    expense_table.column(2).search(value).draw();
+}
+</script>
 {% endblock %}

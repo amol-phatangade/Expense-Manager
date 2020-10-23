@@ -8,8 +8,13 @@ from faker import Faker
 fake = Faker()
 
 categories = [
-    "rent", "utilities", "groceries", "food",
-    "diapers", "autoloan", "booze", "therapist"
+"Income",
+"Paid",
+"Loan Given",
+"Loan Settled-up",
+"Loan Taken",
+"Loan Returned",
+"Investment",
 ]
 
 

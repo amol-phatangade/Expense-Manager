@@ -2,17 +2,22 @@
 <html>
 <head>
   <title>{% block title %}Expense App{% endblock %}</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script><script type="text/javascript"></script>
+
+  <script type="text/javascript"></script>
   <script src="https://use.fontawesome.com/4d0cb8d848.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='jquery-3.5.1.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='jquery.dataTables.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='dataTables.bootstrap.min.js') }}"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='dataTables.bootstrap.min.css') }}" type="text/css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}" type="text/css">
 </head>
 <body>
-  <nav>
-    <ul>
-      <li><a href="{{ url_for('expense_list') }}">Expenses</a></li>
-      <li><a href="{{ url_for('create') }}">New Expense</a></li>
-    </ul>
-  </nav>
+  <div class="tab">
+      <a href="{{ url_for('expense_list') }}" class="my_button" >Expenses</a>
+      <a href="{{ url_for('create') }}" class="my_button" >New Expense</a>
+  </div>
+
   {% block body %}
   {% endblock %}
   {% block javascript %}
