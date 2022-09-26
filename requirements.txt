@@ -21,7 +21,7 @@ ptyprocess==0.6.0
 Pygments==2.2.0
 python-dateutil==2.7.5
 six==1.11.0
-SQLAlchemy==1.2.12
+SQLAlchemy==1.2.18
 text-unidecode==1.2
 traitlets==4.3.2
 wcwidth==0.1.7
