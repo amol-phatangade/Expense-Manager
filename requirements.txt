@@ -26,3 +26,4 @@ text-unidecode==1.2
 traitlets==4.3.2
 wcwidth==0.1.7
 Werkzeug==0.14.1
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
